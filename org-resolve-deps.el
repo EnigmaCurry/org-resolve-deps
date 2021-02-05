@@ -1,10 +1,10 @@
-;; Org resolve deps
-
-;; This package will walk all the include-statements of an org-mode file
-;; and temporarily replace them with the content of the files specified
-;; at tangling.
-
-;; Copyright (C) 2020  Henrik Kjerringvåg
+;;; org-resolve-deps.el --- Tangle Org Includes      -*- lexical-binding: t; -*-
+;;
+;; Author: Henrik Kjerringvåg
+;; Keywords: lisp
+;; Version: 0.0.1
+;;
+;; Copyright (C) 2021  Henrik Kjerringvåg
 ;; 
 ;; This program is free software: you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -18,7 +18,14 @@
 ;; 
 ;; You should have received a copy of the GNU General Public License
 ;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
-
+;;
+;;; Commentary:
+;;
+;; This package will walk all the include-statements of an org-mode file
+;; and temporarily replace them with the content of the files specified
+;; at tangling.
+;;
+;;; Code:
 (require 'org)
 
 (defgroup org-resolve-deps nil
@@ -172,3 +179,5 @@ relative to the file it's in."
                            (apply cmd args)))))))
 
 (provide 'org-resolve-deps)
+
+;;; org-resolve-deps.el ends here

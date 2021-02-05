@@ -3,9 +3,23 @@
 This package will walk all the include-statements of an org-mode file
 and temporarily replace them with the content of the files specified
 at tangling.
-#+begin_src emacs-lisp :noweb yes :tangle yes :comments org
-;; <<license>>
 
+#+begin_src emacs-lisp :noweb yes :tangle yes
+;;; org-resolve-deps.el --- Tangle Org Includes      -*- lexical-binding: t; -*-
+;;
+;; Author: Henrik Kjerringvåg
+;; Keywords: lisp
+;; Version: 0.0.1
+;;
+;; <<license>>
+;;
+;;; Commentary:
+;;
+;; This package will walk all the include-statements of an org-mode file
+;; and temporarily replace them with the content of the files specified
+;; at tangling.
+;;
+;;; Code:
 (require 'org)
 
 (defgroup org-resolve-deps nil
@@ -184,4 +198,8 @@ date +'%Y'
 
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+#+end_src
+
+#+begin_src emacs-lisp :tangle yes
+;;; org-resolve-deps.el ends here
 #+end_src
