@@ -61,27 +61,24 @@ keep it's value negative.
 We need to check the ~:tangle~ argument and make it adhere to how we
 resolve dependencies.
 #+begin_src emacs-lisp :tangle yes :comments org
-(defun org-resolve-deps-header-tangle (str root file)
-  "Ensure that the tangle argument uses the path specified
-If `:tangle` is set to `yes` it will use the current file as base.
-`org-resolve-deps` introduces a new `:tangle` option `root`.
-Specifying `root` will tangle using the root-file as base. Using a
-file-path as argument, works as you'd expect; with relative path being
-relative to the file it's in."
-  (replace-regexp-in-string
-   ":tangle \"?\\([^\n:\"]+\\)\"?"
-   (lambda (tangle)
-     (cond ((string= "yes" tangle) (file-name-sans-extension file))
-           ((string= "root" tangle) (file-name-sans-extension root))
-           ((string= "no" tangle) "no")
-           ((> (length tangle) 0)
-            (save-match-data
-              (let ((out (pop (cdr (split-string (concat "" tangle))))))
-                (if (or (string= "(" (substring out 0 1))
-                        (file-name-absolute-p out))
-                    out
-                  (expand-file-name out (file-name-directory file))))))))
-   str nil 'literal 1))
+  (defun org-resolve-deps-header-tangle (str root file)
+    "Ensure that the tangle argument uses the path specified
+  If `:tangle` is set to `yes` it will use the current file as base.
+  `org-resolve-deps` introduces a new `:tangle` option `root`.
+  Specifying `root` will tangle using the root-file as base. "
+    (replace-regexp-in-string
+     ":tangle \"?\\([^\n:\"]+\\)\"?"
+     (lambda (tangle)
+       (cond ((string= "yes" tangle) (file-name-sans-extension file))
+             ((string= "root" tangle) (file-name-sans-extension root))
+             ((string= "no" tangle) "no")
+             ((> (length tangle) 0)
+              (save-match-data
+                (let ((out (pop (cdr (split-string (concat "" tangle))))))
+                  ;; THIS is modified from the original, I always want the output
+                  ;; to be relative to the caller.
+                  out)))))
+     str nil 'literal 1))
 #+end_src
 
 This is where the bulk of the heavy lifting happens. We walk the

@@ -70,9 +70,7 @@
   "Ensure that the tangle argument uses the path specified
 If `:tangle` is set to `yes` it will use the current file as base.
 `org-resolve-deps` introduces a new `:tangle` option `root`.
-Specifying `root` will tangle using the root-file as base. Using a
-file-path as argument, works as you'd expect; with relative path being
-relative to the file it's in."
+Specifying `root` will tangle using the root-file as base. "
   (replace-regexp-in-string
    ":tangle \"?\\([^\n:\"]+\\)\"?"
    (lambda (tangle)
@@ -82,10 +80,9 @@ relative to the file it's in."
            ((> (length tangle) 0)
             (save-match-data
               (let ((out (pop (cdr (split-string (concat "" tangle))))))
-                (if (or (string= "(" (substring out 0 1))
-                        (file-name-absolute-p out))
-                    out
-                  (expand-file-name out (file-name-directory file))))))))
+                ;; THIS is modified from the original, I always want the output
+                ;; to be relative to the caller.
+                out)))))
    str nil 'literal 1))
 
 
